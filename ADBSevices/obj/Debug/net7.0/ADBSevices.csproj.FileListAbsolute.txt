@@ -1,0 +1,12 @@
+D:\code\InstallRom\ADBSevices\bin\Debug\net7.0\ADBSevices.deps.json
+D:\code\InstallRom\ADBSevices\bin\Debug\net7.0\ADBSevices.dll
+D:\code\InstallRom\ADBSevices\bin\Debug\net7.0\ADBSevices.pdb
+D:\code\InstallRom\ADBSevices\obj\Debug\net7.0\ADBSevices.GeneratedMSBuildEditorConfig.editorconfig
+D:\code\InstallRom\ADBSevices\obj\Debug\net7.0\ADBSevices.AssemblyInfoInputs.cache
+D:\code\InstallRom\ADBSevices\obj\Debug\net7.0\ADBSevices.AssemblyInfo.cs
+D:\code\InstallRom\ADBSevices\obj\Debug\net7.0\ADBSevices.csproj.CoreCompileInputs.cache
+D:\code\InstallRom\ADBSevices\obj\Debug\net7.0\ADBSevices.dll
+D:\code\InstallRom\ADBSevices\obj\Debug\net7.0\refint\ADBSevices.dll
+D:\code\InstallRom\ADBSevices\obj\Debug\net7.0\ADBSevices.pdb
+D:\code\InstallRom\ADBSevices\obj\Debug\net7.0\ref\ADBSevices.dll
+D:\code\InstallRom\ADBSevices\obj\Debug\net7.0\ADBSevices.csproj.AssemblyReference.cache

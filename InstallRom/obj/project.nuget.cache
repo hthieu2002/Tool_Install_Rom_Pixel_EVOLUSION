@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "c5tQND3uxrU+G21Pgc9eXKS6Al3g+xVm5KEmS3KnTBzB9wiAEEtOmMjTdDdtGIX+gEAdQx1zH0PzxDjNPSAQ4w==",
+  "success": true,
+  "projectFilePath": "D:\\code\\InstallRom\\InstallRom\\InstallRom.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hoang\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "Serial": "97CAY109XH",
+    "deviceName": "",
+    "rom": "D:\\code\\rom\\EvolutionX-14.0-20241223-sargo-v9.7-Unfficial.zip",
+    "boot": "D:\\code\\rom\\boot_sargo_evo.img",
+    "checkEdit": true
+  },
+  {
+    "Serial": "98WAY17PQV",
+    "deviceName": "",
+    "rom": "D:\\code\\InstallRom\\InstallRom\\bin\\Release\\Rom\\rom.zip",
+    "boot": "D:\\code\\InstallRom\\InstallRom\\bin\\Release\\Rom\\boot_sargo_evo.img",
+    "checkEdit": true
+  }
+]
