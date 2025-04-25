@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InstallRom")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b7600dafb75c229805ae453f040010053e37f39")]
 [assembly: System.Reflection.AssemblyProductAttribute("InstallRom")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InstallRom")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

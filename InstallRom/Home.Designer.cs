@@ -74,6 +74,7 @@
             cbDevice.Name = "cbDevice";
             cbDevice.Size = new Size(151, 28);
             cbDevice.TabIndex = 7;
+            cbDevice.SelectedIndexChanged += cbDevice_SelectedIndexChanged;
             // 
             // btnNewDevice
             // 

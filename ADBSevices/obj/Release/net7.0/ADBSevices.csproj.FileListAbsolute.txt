@@ -10,3 +10,16 @@ D:\code\InstallRom\ADBSevices\obj\Release\net7.0\ADBSevices.dll
 D:\code\InstallRom\ADBSevices\obj\Release\net7.0\refint\ADBSevices.dll
 D:\code\InstallRom\ADBSevices\obj\Release\net7.0\ADBSevices.pdb
 D:\code\InstallRom\ADBSevices\obj\Release\net7.0\ref\ADBSevices.dll
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\bin\Release\net7.0\ADBSevices.deps.json
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\bin\Release\net7.0\ADBSevices.dll
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\bin\Release\net7.0\ADBSevices.pdb
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\obj\Release\net7.0\ADBSevices.csproj.AssemblyReference.cache
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\obj\Release\net7.0\ADBSevices.GeneratedMSBuildEditorConfig.editorconfig
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\obj\Release\net7.0\ADBSevices.AssemblyInfoInputs.cache
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\obj\Release\net7.0\ADBSevices.AssemblyInfo.cs
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\obj\Release\net7.0\ADBSevices.csproj.CoreCompileInputs.cache
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\obj\Release\net7.0\ADBSevices.sourcelink.json
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\obj\Release\net7.0\ADBSevices.dll
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\obj\Release\net7.0\refint\ADBSevices.dll
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\obj\Release\net7.0\ADBSevices.pdb
+D:\Hoang_Hieu\MAT\code\InstallRom\ADBSevices\obj\Release\net7.0\ref\ADBSevices.dll

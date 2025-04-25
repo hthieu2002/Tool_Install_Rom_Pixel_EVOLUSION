@@ -109,11 +109,148 @@ namespace ADBSevices
             }
         }
 
+        public async Task<(bool, string)> FlashBootImageXiaomiAsync(string bootImagePath, string device)
+        {
+            try
+            {
+                var processInfo = new ProcessStartInfo
+                {
+                    FileName = "fastboot",
+                    Arguments = $"-s {device} boot {bootImagePath}", // Đảm bảo đường dẫn đúng
+                    UseShellExecute = false, // Để sử dụng redirect IO
+                    RedirectStandardOutput = true, // Redirect đầu ra
+                    RedirectStandardError = true,  // Redirect lỗi
+                    CreateNoWindow = true // Ẩn cửa sổ CMD
+                };
+
+                using (var process = new Process { StartInfo = processInfo })
+                {
+                    process.Start();
+
+                    // Đọc đầu ra
+                    string output = await process.StandardOutput.ReadToEndAsync();
+                    string error = await process.StandardError.ReadToEndAsync();
+
+                    // Đợi process hoàn thành
+                    await process.WaitForExitAsync();
+                    Thread.Sleep(5000);
+                    // Kiểm tra đầu ra để xác định xem lệnh có thành công không
+                    if (output.Contains("OKAY", StringComparison.OrdinalIgnoreCase) &&
+                        output.Contains("Finished", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Console.WriteLine("Flash successful.");
+                        return (true, "successful"); // Lệnh thành công
+                    }
+                    else
+                    {
+                        if (error.Contains("OKAY", StringComparison.OrdinalIgnoreCase) &&
+                        error.Contains("Finished", StringComparison.OrdinalIgnoreCase))
+                        {
+                            Console.WriteLine("Flash successful.");
+                            return (true, "successful");  // Lệnh thành công
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Flash failed: {error}");
+                            return (true, "successful");  // Lệnh không thành công
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error during flash process: {ex.Message}");
+                return (false, ex.Message); // Lỗi trong quá trình thực hiện lệnh
+            }
+        }
+        public static string GetDeviceManufacturer(string deviceId)
+        {
+            try
+            {
+                // Thiết lập Process để chạy lệnh adb
+                Process process = new Process();
+                process.StartInfo.FileName = "adb"; // Đảm bảo adb có trong PATH
+                process.StartInfo.Arguments = $"-s {deviceId} shell getprop ro.product.manufacturer";
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+
+                process.Start();
+
+                string output = process.StandardOutput.ReadToEnd().Trim();
+                string error = process.StandardError.ReadToEnd().Trim();
+
+                process.WaitForExit();
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    Console.WriteLine("ADB Error: " + error);
+                    return null;
+                }
+
+                return output; // Trả về nhà sản xuất
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occurred: " + ex.Message);
+                return null;
+            }
+        }
+
         public static void StartBootloader(string deviceIP)
         {
             runCMD(String.Format(" reboot bootloader"), deviceIP);
         }
+        public static void StartRecovey(string deviceIP)
+        {
+            runCMD(String.Format(" reboot recovery"), deviceIP);
+        }
+        public static bool IsAdbDeviceConnected(string deviceId)
+        {
+            try
+            {
+                // Thiết lập process để chạy adb
+                Process process = new Process();
+                process.StartInfo.FileName = "adb"; // Đảm bảo adb có trong PATH hoặc cung cấp đường dẫn đầy đủ
+                process.StartInfo.Arguments = "devices";
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
 
+                process.Start();
+
+                // Đọc kết quả từ adb
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+
+                process.WaitForExit();
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    Console.WriteLine("ADB Error: " + error);
+                    return false; // Nếu có lỗi, coi như thiết bị không kết nối
+                }
+
+                // Phân tích kết quả đầu ra
+                string[] lines = output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var line in lines)
+                {
+                    if (line.Contains(deviceId) && line.EndsWith("device"))
+                    {
+                        return true; // Thiết bị đã kết nối và trạng thái là "device"
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occurred: " + ex.Message);
+            }
+
+            return false; // Nếu không tìm thấy thiết bị hoặc có lỗi
+        }
         public static void FastBootReboot(string deviceIP)
         {
             Process process = new Process();

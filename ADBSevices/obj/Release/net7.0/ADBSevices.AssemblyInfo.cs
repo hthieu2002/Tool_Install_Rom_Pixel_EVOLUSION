@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ADBSevices")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b7600dafb75c229805ae453f040010053e37f39")]
 [assembly: System.Reflection.AssemblyProductAttribute("ADBSevices")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ADBSevices")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

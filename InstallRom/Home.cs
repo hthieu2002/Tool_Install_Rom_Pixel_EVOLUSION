@@ -11,11 +11,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace InstallRom
 {
     public partial class Home : Form
     {
+        RomScript rom;
         private ADBSever adbServer;
         private LogicScript logicScript;
         private AddDevices device;
@@ -23,7 +25,7 @@ namespace InstallRom
         private FileSystemWatcher _fileSystemWatcher;
         private ContextMenuStrip contextMenu;
         private RomScript romScript;
-        
+
         public Home()
         {
             InitializeComponent();
@@ -52,7 +54,6 @@ namespace InstallRom
             dgvDevices.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvDevices.Columns.Clear();
             dgvDevices.AllowUserToAddRows = false;
-            
             /*
              * set up columns
              */
@@ -97,9 +98,13 @@ namespace InstallRom
             btnNewDevice.Anchor = AnchorStyles.Left | AnchorStyles.Top;
             // lable
             lbStatus.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
-           
+
             // combobox
             cbDevice.Anchor = AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            cbDevice.Items.Clear();
+            cbDevice.Items.Add("Pixcel");
+            cbDevice.Items.Add("Xiaomi");
+            cbDevice.SelectedIndex = 0;
         }
         private void dgvDevices_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -123,7 +128,7 @@ namespace InstallRom
         private bool checkDeviceRomBoot(string device, bool check)
         {
             DevicesCustomData result = logicScript.CallGetDeviceById(device);
-          
+
             if (result.rom != "" && result.boot != "" && check)
             {
                 lbStatus.Text = "File Boot and Rom Exits";
@@ -174,14 +179,14 @@ namespace InstallRom
         {
             var result = logicScript.CallLogic(1);
             lbStatus.Text = result.Item1;
-            
+
         }
 
         private void btnFileRom_Click(object sender, EventArgs e)
         {
             var result = logicScript.CallLogic(2);
             lbStatus.Text = result.Item1;
-            
+
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -192,22 +197,21 @@ namespace InstallRom
 
                 if (isChecked)
                 {
-                    
+                   // string selectedItem = cbDevice.SelectedItem?.ToString() ?? "None";
                     DevicesCustomData device = new DevicesCustomData
                     {
                         Serial = row.Cells["Serial"].Value.ToString(),
                         checkEdit = false
                     };
                     checkDeviceRomBoot(device.Serial, device.checkEdit);
-                   
-                    StartDeviceThread(device);
+                    StartDeviceThread(device, cbDevice.SelectedIndex);
                 }
             }
         }
-        private void StartDeviceThread(DevicesCustomData deviceID)
+        private void StartDeviceThread(DevicesCustomData deviceID, int deviceName)
         {
-           // lbStatus.Text = $"Start device {deviceID.Serial}";
-            Thread deviceThread = new Thread(() => romScript.StartRomScript(deviceID));
+            // lbStatus.Text = $"Start device {deviceID.Serial}";
+            Thread deviceThread = new Thread(() => romScript.StartRomScript(deviceID, deviceName));
             deviceThread.Start();
         }
         private void btnNewDevice_Click(object sender, EventArgs e)
@@ -315,11 +319,16 @@ namespace InstallRom
                     if (row.Cells["Serial"].Value.ToString() == device.Serial)
                     {
                         row.Cells[$"{column}"].Value = value;
-                        break; 
+                        break;
                     }
                 }
             }
         }
 
+        private void cbDevice_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+          
+        }
     }
 }

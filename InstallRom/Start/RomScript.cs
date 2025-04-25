@@ -3,7 +3,9 @@ using InstallRom.Data;
 using InstallRom.Logic;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +20,8 @@ namespace InstallRom.Start
         private LogicStartScript startScript;
         private ADBService ADBService;
         private ADBSever sever;
+
+        public RomScript() { }
         public RomScript(UpdateProgressOnUI progressMethod)
         {
             progress = progressMethod;
@@ -26,7 +30,7 @@ namespace InstallRom.Start
             sever = new ADBSever();
         }
 
-        public void StartRomScript(DevicesCustomData device)
+        public void StartRomScript(DevicesCustomData device, int deviceName)
         {
             progress?.Invoke(device, "Progress", $"Start {device.Serial}");
             Console.WriteLine(device.Serial);
@@ -42,15 +46,17 @@ namespace InstallRom.Start
                 boot = result.boot,
                 rom = result.rom,
             };
-            installRom(device);
+            installRom(device, deviceName);
         }
-        public async void installRom(DevicesCustomData device)
+        public async void installRom(DevicesCustomData device, int deviceName)
         {
+            Console.WriteLine(deviceName);
             bool result;
             string textResult;
             progress(device, "Progress", $"Start install rom");
             ADBService.StartBootloader(device.Serial);
             await Task.Delay(2000);
+
             while (true)
             {
                 if (sever.FlasbootIsDeviceOnline(device.Serial))
@@ -62,13 +68,44 @@ namespace InstallRom.Start
                     // install boot img
                     await Task.Delay(6000);
                     ADBService.UnlockBootloader(device.Serial);
-                    await Task.Delay(10000);
+                    await Task.Delay(5000);
                     progress(device, "Progress", $"Install {device.boot}");
-                    (result,textResult) = await ADBService.FlashBootImageAsync(device.boot, device.Serial);
+                    if (deviceName == 0)
+                    { 
+                        (result, textResult) = await ADBService.FlashBootImageAsync(device.boot, device.Serial); 
+                    }
+                    else
+                    {
+                        (result, textResult) = await ADBService.FlashBootImageXiaomiAsync(device.boot, device.Serial);
+                    }
+
                     if (result)
                     {
-                        progress(device, "Progress", $"Install {device.boot} {textResult}!");
-                        ADBService.FastBootReboot(device.Serial);
+                        if (deviceName == 0)
+                        {
+                            progress(device, "Progress", $"Install Pixcel {device.boot} {textResult}!");
+                            // pixcel
+                            ADBService.FastBootReboot(device.Serial);
+                        }
+                        else
+                        {
+                            progress(device, "Progress", $"Install Xiaomi {device.boot} {textResult}!");
+                            // xiaomi
+                            await Task.Delay(10000);
+                            while (true)
+                            {
+                                // kiểm tra adb 
+                                bool isConnected = ADBService.IsAdbDeviceConnected(device.Serial);
+                                if (isConnected)
+                                {
+                                    ADBService.StartRecovey(device.Serial);
+                                    await Task.Delay(5000);
+                                    break;
+                                }
+                                await Task.Delay(3000);
+                            }
+                        }
+
                         // install rom
                         /*progress(device, "Progress", $"Check home!");
                         await Task.Delay(30000);
